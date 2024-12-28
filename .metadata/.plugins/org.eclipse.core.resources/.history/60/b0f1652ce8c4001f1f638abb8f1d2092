@@ -1,0 +1,102 @@
+package com.atm.service;
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+import com.atm.pojo.Pojo;
+
+public class Functionality {
+	
+	private int balance;
+	private int pin;
+	private ArrayList<String> transactionHistory;
+	
+	
+	Pojo pojo = new Pojo(10000, 1234);
+
+
+	// Method to display the menu options for the ATM
+	public void displayMenu() {
+		System.out.println("1. Check Balance");
+		System.out.println("2. Deposit");
+		System.out.println("3. Withdraw");
+		System.out.println("4. Change Pin");
+		System.out.println("5. Transaction History");
+		System.out.println("6. Exit");
+	}
+
+	// Method to deposit an amount into the balance
+	public void deposit(int amount) {
+		balance += amount; // Increase the balance by the deposited amount
+		transactionHistory.add("Deposited: $" + amount); // Add a transaction record
+	}
+
+	// Method to withdraw an amount from the balance
+	public void withdraw(int amount) {
+		// Check if there are sufficient funds before proceeding with the withdrawal
+		if (balance < amount) {
+			System.out.println("Insufficient funds!"); // Notify the user of insufficient funds
+			return; // Exit the method if funds are not sufficient
+		}
+		balance -= amount; // Deduct the amount from the balance
+		transactionHistory.add("Withdrew: $" + amount); // Add a transaction record
+	}
+
+	// Method to get the current balance
+	public int getBalance() {
+		transactionHistory.add("Checked Balance: $" + balance); // Record the balance check in history
+		return balance; // Return the current balance
+	}
+
+	// Method to validate the user's input PIN with the stored PIN
+	public boolean validatePin(int pin) {
+		return this.pin == pin; // Return true if the PINs match, false otherwise
+	}
+
+	// Method to change the user's PIN to a new value
+	public void changePin(int newPin) {
+		this.pin = newPin; // Update the PIN
+		transactionHistory.add("Changed PIN"); // Record the PIN change in transaction history
+		System.out.println("PIN Changed:"); // Notify the user of the successful change
+	}
+
+	// Method to display the transaction history
+	public void displayTransactionHistory() {
+		// Check if the transaction history is empty
+		if (transactionHistory.isEmpty()) {
+			System.out.println("No transactions yet."); // Notify the user if there are no transactions
+		} else {
+			System.out.println("Transaction History:");
+			// Iterate over the transaction history and print each entry
+			for (String transaction : transactionHistory) {
+				System.out.println(transaction); // Display each transaction
+			}
+		}
+	}
+
+	// Private method to authenticate the user by checking the PIN
+	private boolean authenticateUser(Scanner scanner) {
+		int attempts = 0; // Counter for the number of attempts
+		// Allow the user to attempt entering the PIN up to 3 times
+		while (attempts < 3) {
+			System.out.print("Enter the PIN: ");
+			int pin = Integer.parseInt(System.console().readLine()); // Read the user's input
+			if (validatePin(pin)) {
+				return true; // Return true if the PIN is correct
+			} else {
+				attempts++; // Increment the attempt counter
+				System.out.println("Invalid PIN! Attempts remaining: " + (3 - attempts)); // Notify the user
+			}
+		}
+
+		// If the user fails 3 attempts, lock the account and introduce a delay
+		System.out.println("Account locked. Please wait for a few seconds before trying again.");
+		try {
+			Thread.sleep(5000); // Pause for 5 seconds (5000 milliseconds)
+		} catch (InterruptedException e) {
+			System.out.println("An error occurred while waiting."); // Handle interruption errors
+		}
+		return false; // Return false if the user fails to authenticate
+	}
+
+}

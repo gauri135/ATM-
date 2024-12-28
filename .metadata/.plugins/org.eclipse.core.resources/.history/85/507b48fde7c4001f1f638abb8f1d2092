@@ -1,0 +1,35 @@
+package com.atm.pojo;
+
+
+public class Account {
+	// Private fields to store the ATM balance, user's PIN, and transaction history
+	private int balance;
+	private int pin;
+
+	public Account() {
+
+	}
+
+	public Account(int balance, int pin) {
+		super();
+		this.balance = balance;
+		this.pin = pin;
+	}
+
+	public int getBalance() {
+		return balance;
+	}
+
+	public void setBalance(int balance) {
+		this.balance = balance;
+	}
+
+	public int getPin() {
+		return pin;
+	}
+
+	public void setPin(int pin) {
+		this.pin = pin;
+	}
+
+}

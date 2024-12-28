@@ -1,0 +1,42 @@
+package com.atm.pojo;
+
+import java.util.ArrayList;
+
+public class Pojo {
+
+	private int balance;
+	private int pin;
+	private ArrayList<String> transactionHistory;
+
+	public Pojo(int balance, int pin, ArrayList<String> transactionHistory) {
+		super();
+		this.balance = balance;
+		this.pin = pin;
+		this.transactionHistory = transactionHistory;
+	}
+
+	public int getBalance() {
+		return balance;
+	}
+
+	public void setBalance(int balance) {
+		this.balance = balance;
+	}
+
+	public int getPin() {
+		return pin;
+	}
+
+	public void setPin(int pin) {
+		this.pin = pin;
+	}
+
+	public ArrayList<String> getTransactionHistory() {
+		return transactionHistory;
+	}
+
+	public void setTransactionHistory(ArrayList<String> transactionHistory) {
+		this.transactionHistory = transactionHistory;
+	}
+
+}
